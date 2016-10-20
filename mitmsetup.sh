@@ -2,6 +2,13 @@
 ### GET BUILD ESSENTIALS, TOOLS  AND LIBRARIES
 apt-get install git python-pip python-dev python-setuptools libpcap0.8-dev libnetfilter-queue-dev libssl-dev libjpeg-dev libxml2-dev libxslt1-dev  libcapstone-dev libffi-dev file
 apt-get install build-essential ruby-dev libpcap-dev ruby
+apt-get install tcpdump graphviz imagemagick python-gnuplot python-crypto python-pyx
+pip install scapy
+apt-get install build-essential python-dev libnetfilter-queue-dev
+git clone https://github.com/fqrouter/python-netfilterqueue.git
+cd python-netfilterqueue
+python setup.py install
+cd ..
 ### GET SIPCRACK TO USE AT LATER STAGE
 apt-get install sipcrack
 pip install virtualenvwrapper
