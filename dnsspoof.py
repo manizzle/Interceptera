@@ -14,7 +14,6 @@ domain = parser.get('dnsmodule', 'dnsdomain')
 localIP = parser.get('dnsmodule', 'dnshost')
 
 os.system('iptables -t nat -A PREROUTING -p udp --dport 53 -j NFQUEUE --queue-num 1')
-
 def callback(packet):
     payload = packet.get_payload()
     pkt = IP(payload)

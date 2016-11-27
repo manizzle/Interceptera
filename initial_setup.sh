@@ -1,7 +1,7 @@
 #!/bin/bash
 ##Interceptor First stage setup gateway  host
 ##SecurityGuru.Ca
-##Adnan Ahmad	
+##Adnan Ahmad
 ##
 
 function localadaptor {

